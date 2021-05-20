@@ -163,27 +163,31 @@ int main(void)
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 
-  char spi_reg[20];
+  char spi_reg[21];
 
   HAL_GPIO_WritePin(GPIOH, GPIO_PIN_15, GPIO_PIN_RESET); // set the PMOD port correctly
   spi_reg[0] = 0x4a;
   spi_reg[1] = 0x7a;
   spi_reg[2] = 0x7c;
   spi_reg[3] = 0x4a;
+
   spi_reg[4] = 0x00;
   spi_reg[5] = 0x00;
   spi_reg[6] = 0x00;
   spi_reg[7] = 0x4a;
   spi_reg[8] = 0x00;
   spi_reg[9] = 0x04;
+
   spi_reg[10] = 0x00;
   spi_reg[11] = 0x00;
   spi_reg[12] = 0x00;
   spi_reg[13] = 0x00;
+
   spi_reg[14] = 0x00;
   spi_reg[15] = 0x00;
   spi_reg[16] = 0x00;
   spi_reg[17] = 0x00;
+
   spi_reg[18] = 0x00;
   spi_reg[19] = 0x7b;
   spi_reg[20] = 0x00;
@@ -200,8 +204,8 @@ int main(void)
     //MX_USB_HOST_Process();
 	HAL_GPIO_WritePin(GPIOI, css_Pin, GPIO_PIN_RESET);
 	HAL_SPI_Init( &hspi2 );
-	spi_tx[0] = 0xa8;
-	spi_tx[1] = 0x00;
+	//spi_tx[0] = 0xa8;
+	//spi_tx[1] = 0x00;
 	HAL_SPI_Transmit(&hspi2, (uint8_t *)&spi_reg, 21, 100);
     while( hspi2.State == HAL_SPI_STATE_BUSY );  // wait for xmission complete
     HAL_SPI_DeInit( &hspi2 );
@@ -751,7 +755,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;//SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;//SPI_PHASE_2EDGE;
+  hspi2.Init.CLKPhase = SPI_PHASE_2EDGE;//SPI_PHASE_2EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
