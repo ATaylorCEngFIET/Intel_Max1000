@@ -197,23 +197,24 @@ int main(void)
   char spi_rx[2];
   char spi_tx[2];
 
-
+  HAL_SPI_Init( &hspi2 );
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while(1){
     //MX_USB_HOST_Process();
 	HAL_GPIO_WritePin(GPIOI, css_Pin, GPIO_PIN_RESET);
-	HAL_SPI_Init( &hspi2 );
+
 	//spi_tx[0] = 0xa8;
 	//spi_tx[1] = 0x00;
 	HAL_SPI_Transmit(&hspi2, (uint8_t *)&spi_reg, 21, 100);
     while( hspi2.State == HAL_SPI_STATE_BUSY );  // wait for xmission complete
-    HAL_SPI_DeInit( &hspi2 );
+    //HAL_SPI_DeInit( &hspi2 );
     HAL_GPIO_WritePin(GPIOI, css_Pin, GPIO_PIN_SET);
     HAL_Delay(1000);
     spi_reg[20] = spi_reg[20] + 1;
 
   }
+  HAL_SPI_DeInit( &hspi2 );
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
